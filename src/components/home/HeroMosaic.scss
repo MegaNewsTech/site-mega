@@ -1,0 +1,533 @@
+.hero-mosaic {
+  position: relative;
+  /* Quanto maior, mais “tempo” de scroll para ver o Pipeline encolher na tela */
+  height: 300vh;
+  margin-top: 8px;
+
+  &__sticky {
+    position: sticky;
+    top: var(--header-height, 72px);
+    height: calc(100vh - var(--header-height, 72px));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* NÃO usar overflow:hidden aqui — quebra o pin em alguns browsers;
+       o clip fica só no viewport interno da animação */
+    overflow: visible;
+  }
+
+  &__viewport {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+    --mosaic-edge: #fff;
+    --mosaic-vignette: 0.2;
+  }
+
+  &__center {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &__stage {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 24px 40px;
+    will-change: transform;
+  }
+
+  &__row {
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+
+    &--0 {
+      padding-left: 28px;
+    }
+    &--1 {
+      padding-left: 0;
+    }
+    &--2 {
+      padding-left: 40px;
+    }
+  }
+
+  &__vignette {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        var(--mosaic-edge) 0%,
+        transparent 12%,
+        transparent 88%,
+        var(--mosaic-edge) 100%
+      ),
+      radial-gradient(ellipse 75% 70% at 50% 45%, transparent 42%, var(--mosaic-edge) 100%);
+    opacity: var(--mosaic-vignette, 0.35);
+    z-index: 10;
+  }
+
+  &__fade {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, transparent, #fff 90%);
+    z-index: 11;
+  }
+
+}
+
+.mosaic-card {
+  position: relative;
+  width: clamp(200px, 22vw, 280px);
+  height: clamp(150px, 16vw, 200px);
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid #d8dbe3;
+  box-shadow: 0 8px 24px rgba(50, 51, 56, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+  transform-origin: center center;
+
+  &--hero {
+    z-index: 30;
+    border-radius: 10px;
+    border-color: #d8dbe3;
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.06);
+    will-change: transform, border-radius, box-shadow;
+    background: #fff;
+
+    .mosaic-card__media {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 22%;
+      transform: scale(1.18) translateZ(0);
+      transform-origin: center 28%;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+
+      &--logo {
+        object-fit: contain;
+        object-position: center;
+        transform: none;
+        transform-origin: center;
+        padding: 14%;
+        background: #fff;
+      }
+
+      &--fade {
+        animation: mosaic-hero-fade 0.55s ease;
+      }
+    }
+  }
+
+  &--logo {
+    background: #fff;
+  }
+
+  &--dark {
+    background: #1a1d29;
+    border-color: #2c3144;
+
+    .mosaic-card__label {
+      color: #9aa0b5;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: #3a4058;
+    }
+  }
+
+  &--photo {
+    background: #fff;
+    border-color: #d8dbe3;
+
+    .mosaic-card__media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transform: translateZ(0);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+  }
+
+  &--people {
+    background: #f3f4f8;
+
+    .mosaic-card__media {
+      object-fit: cover;
+      object-position: center 20%;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    font-size: 10px;
+    font-weight: 600;
+    color: #676879;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e6e9ef;
+    border-radius: 6px;
+    padding: 2px 7px;
+    pointer-events: none;
+  }
+
+  &__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.mosaic-ph {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 6px;
+
+  &__chrome {
+    display: flex;
+    gap: 4px;
+
+    span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1px solid #c5c7d0;
+
+      &:nth-child(1) {
+        background: #ffb3b3;
+        border-color: #ff8a8a;
+      }
+      &:nth-child(2) {
+        background: #ffe08a;
+        border-color: #ffcb00;
+      }
+      &:nth-child(3) {
+        background: #b3f0c8;
+        border-color: #00c875;
+      }
+    }
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    gap: 5px;
+    min-height: 0;
+    position: relative;
+    border: 1px dashed #d0d4de;
+    border-radius: 8px;
+    padding: 5px;
+    background: #fbfbfd;
+  }
+
+  &__sidebar {
+    width: 14%;
+    min-width: 14px;
+    border: 1px solid #d8dbe3;
+    border-radius: 5px;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 8px,
+      #e8eaf0 8px,
+      #e8eaf0 9px
+    );
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 12px;
+
+    i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid #c5c7d0;
+      flex-shrink: 0;
+    }
+
+    b {
+      height: 5px;
+      border-radius: 3px;
+      border: 1px solid #d0d4de;
+      background: #eef0f6;
+      display: block;
+    }
+
+    em {
+      width: 22px;
+      height: 8px;
+      border-radius: 3px;
+      border: 1px solid #a8b8d8;
+      background: #e8eef8;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+  }
+
+  &__agent {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 34%;
+    border: 1px solid #d8dbe3;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+  }
+
+  &__agent-head {
+    height: 16px;
+    border-radius: 5px;
+    border: 1px solid #d8dbe3;
+    background: linear-gradient(90deg, #e8eef8, #fff);
+  }
+
+  &__agent-line {
+    height: 6px;
+    border-radius: 3px;
+    border: 1px solid #e0e3ea;
+    background: #f5f6fa;
+
+    &:nth-child(6) {
+      border-color: #00c875;
+      background: #e8faf0;
+    }
+  }
+
+  &__bubble {
+    position: absolute;
+    z-index: 3;
+    border: 1px solid #d8dbe3;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    animation: mosaic-pop 2.6s ease-in-out infinite;
+
+    &--1 {
+      width: 54px;
+      height: 20px;
+      left: 20%;
+      top: 26%;
+      border-color: #00c875;
+    }
+    &--2 {
+      width: 60px;
+      height: 20px;
+      left: 26%;
+      top: 50%;
+      border-color: #fdab3d;
+      animation-delay: 0.45s;
+    }
+    &--3 {
+      width: 48px;
+      height: 18px;
+      left: 16%;
+      top: 70%;
+      border-color: #052f84;
+      animation-delay: 0.9s;
+    }
+  }
+
+  &__chart {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 3px;
+    padding: 4px 2px 0;
+
+    span {
+      flex: 1;
+      border: 1px solid #3d5fa0;
+      border-radius: 2px 2px 0 0;
+      background: rgba(5, 47, 132, 0.15);
+      min-height: 6px;
+    }
+
+    &--dark span {
+      border-color: #0742b0;
+      background: rgba(5, 47, 132, 0.35);
+    }
+  }
+
+  &__kanban {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+  }
+
+  &__col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border: 1px dashed #d0d4de;
+    border-radius: 5px;
+    padding: 3px;
+
+    div {
+      flex: 1;
+      border: 1px solid #d8dbe3;
+      border-radius: 3px;
+      background: #fff;
+      min-height: 12px;
+
+      &:nth-child(1) {
+        border-color: #fdab3d;
+      }
+      &:nth-child(2) {
+        border-color: #052f84;
+      }
+      &:nth-child(3) {
+        border-color: #00c875;
+      }
+    }
+  }
+
+  &__map {
+    flex: 1;
+    border: 1px solid #d0d4de;
+    border-radius: 5px;
+    background:
+      linear-gradient(90deg, transparent 49%, #dde1ea 49%, #dde1ea 51%, transparent 51%),
+      #f0f2f7;
+    position: relative;
+
+    i {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50% 50% 50% 0;
+      border: 1.5px solid #052f84;
+      background: rgba(5, 47, 132, 0.25);
+      transform: rotate(-45deg);
+
+      &:nth-child(1) {
+        top: 28%;
+        left: 32%;
+      }
+      &:nth-child(2) {
+        top: 48%;
+        left: 55%;
+        border-color: #ff158a;
+      }
+      &:nth-child(3) {
+        top: 38%;
+        left: 68%;
+        border-color: #00c875;
+      }
+    }
+  }
+
+  &__timer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+      width: 50%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 3px solid #e6e9ef;
+      border-top-color: #052f84;
+      border-right-color: #052f84;
+    }
+  }
+
+  &--dark .mosaic-ph__body {
+    background: #12141c;
+    border-color: #2c3144;
+  }
+}
+
+@keyframes mosaic-pop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-3px) scale(1.04);
+    opacity: 1;
+  }
+}
+
+@keyframes mosaic-hero-fade {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-mosaic {
+    height: 260vh;
+
+    &__sticky {
+      top: 64px;
+      height: calc(100vh - 64px);
+    }
+
+    &__stage {
+      gap: 14px;
+      padding: 12px;
+    }
+
+    &__row {
+      gap: 12px;
+    }
+  }
+
+  .mosaic-card {
+    width: 156px;
+    height: 116px;
+  }
+}

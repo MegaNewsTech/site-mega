@@ -1,0 +1,14 @@
+.auth-circles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-circles__item {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(5, 47, 132, 0.28);
+  box-sizing: border-box;
+}

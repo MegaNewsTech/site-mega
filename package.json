@@ -1,0 +1,26 @@
+{
+  "name": "meganews",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "oxlint"
+  },
+  "dependencies": {
+    "framer-motion": "^12.42.2",
+    "lucide-react": "^1.24.0",
+    "next": "^16.1.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "oxlint": "^1.71.0",
+    "sass": "^1.101.0",
+    "typescript": "~6.0.2"
+  }
+}

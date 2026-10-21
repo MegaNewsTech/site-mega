@@ -80,13 +80,11 @@ img {
 }
 
 #produtos,
+#suporte,
 #time,
-#diferenciais,
-#numeros,
-#reels,
 #instagram,
-#historia,
-#cresca,
+#numeros,
+#contato,
 #comece,
 #localizacao {
   scroll-margin-top: calc(var(--header-height, 72px) + 12px);

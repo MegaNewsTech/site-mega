@@ -1,0 +1,156 @@
+/* —— HERO 30 ANOS —— */
+.hero30 {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: clamp(560px, calc(100vh - var(--header-height)), 860px);
+  padding: 96px 0;
+  background: linear-gradient(245.48deg, #092160 25.97%, #0c2c81 94.14%);
+  color: #fff;
+  font-family: 'Poppins', var(--font);
+
+  &__numerals {
+    position: absolute;
+    top: 50%;
+    right: -4%;
+    height: 94%;
+    width: auto;
+    max-width: none;
+    transform: translateY(-50%);
+    /* o soft-light do SVG não se aplica dentro de <img>; a opacidade compensa */
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 4vw, 48px);
+  }
+
+  &__copy {
+    max-width: 960px;
+  }
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    &::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: #ef5b5b;
+    }
+  }
+
+  h1 {
+    /* mantém a quebra do layout: "traduzindo tecnologia em" / "software" */
+    max-width: 13.5em;
+    font-size: clamp(40px, 3.8vw, 74px);
+    font-weight: 300;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  &__sub {
+    max-width: 880px;
+    margin-top: 32px;
+    font-size: clamp(16px, 1.3vw, 21px);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  &__seal {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 24px 0 24px 48px;
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+
+    p {
+      font-size: clamp(18px, 1.4vw, 23px);
+      line-height: 1.5;
+      color: #7fb0f2;
+    }
+  }
+
+  &__seal-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+
+    img {
+      width: 160px;
+      height: auto;
+    }
+
+    span {
+      margin-top: 14px;
+      padding-left: 0.6em; /* compensa o letter-spacing da última letra */
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      color: #dce6f7;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .hero30 {
+    min-height: 0;
+    padding: 72px 0 64px;
+
+    &__numerals {
+      right: -40%;
+      height: 70%;
+    }
+
+    &__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__seal {
+      flex-direction: row;
+      align-items: center;
+      gap: 28px;
+      padding: 24px 0 0;
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    &__seal-mark {
+      width: 120px;
+
+      img {
+        width: 120px;
+      }
+
+      span {
+        font-size: 16px;
+      }
+    }
+  }
+}

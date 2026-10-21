@@ -1,10 +1,10 @@
 'use client'
 
-const PHONE = '5574999728690'
-const MESSAGE =
-  'Olá, equipe Mega News. Gostaria de falar com um consultor sobre as soluções e sistemas da empresa.'
+import { whatsappUrl } from '@/lib/whatsapp'
 
-const WHATSAPP_URL = `https://wa.me/${PHONE}?text=${encodeURIComponent(MESSAGE)}`
+const WHATSAPP_URL = whatsappUrl(
+  'Olá, equipe Mega News. Gostaria de falar com um consultor sobre as soluções e sistemas da empresa.',
+)
 
 export default function FloatingWhatsApp() {
   return (

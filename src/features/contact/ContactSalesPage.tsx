@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
+import { products } from '@/features/products/products'
+import { whatsappUrl } from '@/lib/whatsapp'
 import './ContactSalesPage.scss'
 
 const BENEFITS = [
@@ -12,18 +14,42 @@ const BENEFITS = [
 ]
 
 const SIZES = ['1-19', '20-49', '50-99', '100-250', '251-1500', '1500+']
-const EXPLORE = [
-  'Mega Posto',
-  'Mega Posto Analytics',
-  'Mega Ágil',
-  'Mega Flex Gestão',
-  'Pacote completo',
-  'Não tenho certeza',
-]
+const EXPLORE = [...products.map((p) => p.name), 'Pacote completo', 'Não tenho certeza']
+
+type ContactForm = {
+  firstName: string
+  lastName: string
+  email: string
+  jobTitle: string
+  phone: string
+  company: string
+  companySize: string
+  explore: string
+  needs: string
+}
+
+/** Organized message the visitor sends to the sales team on WhatsApp. */
+function buildWhatsappMessage(form: ContactForm) {
+  const lines = [
+    '*Solicitação de orçamento — site Mega News*',
+    '',
+    `*Nome:* ${form.firstName.trim()} ${form.lastName.trim()}`,
+    `*E-mail:* ${form.email.trim()}`,
+    `*Telefone:* +55 ${form.phone.trim()}`,
+  ]
+  if (form.jobTitle.trim()) lines.push(`*Cargo:* ${form.jobTitle.trim()}`)
+  lines.push(
+    `*Empresa:* ${form.company.trim()}`,
+    `*Tamanho da empresa:* ${form.companySize} funcionários`,
+    `*Interesse:* ${form.explore}`,
+  )
+  if (form.needs.trim()) lines.push('', '*Sobre a empresa e a necessidade:*', form.needs.trim())
+  return lines.join('\n')
+}
 
 export default function ContactSalesPage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [form, setForm] = useState({
+  const [whatsappLink, setWhatsappLink] = useState<string | null>(null)
+  const [form, setForm] = useState<ContactForm>({
     firstName: '',
     lastName: '',
     email: '',
@@ -35,12 +61,16 @@ export default function ContactSalesPage() {
     needs: '',
   })
 
-  const update = (key: keyof typeof form, value: string) =>
+  const update = (key: keyof ContactForm, value: string) =>
     setForm((f) => ({ ...f, [key]: value }))
 
+  // Sem integração por enquanto: abre o WhatsApp com a mensagem pronta e o
+  // visitante só toca em enviar (o WhatsApp não permite envio automático).
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    const link = whatsappUrl(buildWhatsappMessage(form))
+    setWhatsappLink(link)
+    window.open(link, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -88,13 +118,24 @@ export default function ContactSalesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {submitted ? (
+            {whatsappLink ? (
               <div className="contact__success">
                 <div className="contact__success-icon">✓</div>
-                <h2>Obrigado!</h2>
-                <p>Seu envio foi recebido. Nossa equipe de vendas entrará em contato em breve.</p>
-                <button type="button" className="btn btn-primary" onClick={() => setSubmitted(false)}>
-                  Enviar outro formulário
+                <h2>Quase lá!</h2>
+                <p>
+                  Abrimos o WhatsApp com a sua mensagem pronta. É só tocar em enviar para falar com
+                  a nossa equipe de vendas.
+                </p>
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  Abrir o WhatsApp novamente
+                </a>
+                <button type="button" className="btn btn-outline" onClick={() => setWhatsappLink(null)}>
+                  Editar meus dados
                 </button>
               </div>
             ) : (
@@ -210,13 +251,13 @@ export default function ContactSalesPage() {
                 </label>
 
                 <button type="submit" className="btn btn-primary contact__submit">
-                  Enviar
+                  Enviar pelo WhatsApp
                 </button>
 
                 <p className="contact__legal">
-                  Ao enviar este formulário, aceito a{' '}
-                  <a href="#">política de privacidade</a> da Mega News e autorizo o contato para fins
-                  de marketing por e-mail, telefone, SMS e outros meios.
+                  Seus dados vão numa mensagem pronta no WhatsApp; nada é enviado sem você tocar em
+                  enviar. Ao enviar, aceito a <a href="#">política de privacidade</a> da Mega News e
+                  autorizo o contato por e-mail, telefone e WhatsApp.
                 </p>
               </form>
             )}
@@ -229,7 +270,7 @@ export default function ContactSalesPage() {
           <h2>Com a confiança de empresas que crescem com a gente</h2>
           <div className="contact__stats">
             {[
-              { value: '29 anos', label: 'No mercado de software' },
+              { value: '30 anos', label: 'No mercado de software' },
               { value: '98%', label: 'Satisfação dos clientes' },
               { value: '4', label: 'Sistemas para gestão e vendas' },
               { value: 'Irecê-BA', label: 'Atendimento regional e além' },

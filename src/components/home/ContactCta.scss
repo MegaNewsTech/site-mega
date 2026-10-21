@@ -1,0 +1,129 @@
+/* —— VAMOS CONVERSAR —— */
+.contact-cta {
+  padding: 88px 0;
+  background: #f3f5f9;
+
+  &__container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    gap: 64px;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__eyebrow {
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0c2c81;
+  }
+
+  &__copy {
+    h2 {
+      max-width: 380px;
+      font-size: clamp(28px, 2.6vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #333;
+    }
+
+    > p:last-child {
+      max-width: 400px;
+      margin-top: 18px;
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    input {
+      height: 46px;
+      padding: 0 14px;
+      border: 1px solid #dfe4ec;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        border-color: #0c2c81;
+        box-shadow: 0 0 0 3px rgba(12, 44, 129, 0.12);
+      }
+    }
+
+    button {
+      height: 54px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 6px;
+      background: #0c2c81;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #092160;
+      }
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &__note {
+    font-size: 12.5px;
+    color: var(--text-muted);
+
+    &--sent {
+      color: var(--text-secondary);
+
+      a {
+        color: #0c2c81;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .contact-cta {
+    padding: 64px 0;
+
+    &__container {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-cta__row {
+    grid-template-columns: 1fr;
+  }
+}

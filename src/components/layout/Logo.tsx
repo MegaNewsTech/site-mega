@@ -15,7 +15,7 @@ export default function Logo({ className = '', inverted = false }: LogoProps) {
       aria-label="Mega News - Ir para o início"
     >
       <img
-        src="/megalogo.svg"
+        src={inverted ? '/megalogo-inverted.svg' : '/megalogo.svg'}
         alt="Mega News"
         className="logo__mark"
         width={168}

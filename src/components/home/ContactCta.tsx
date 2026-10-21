@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { whatsappUrl } from '@/lib/whatsapp'
+import { trackEvent } from '@/lib/clarity'
 import './ContactCta.scss'
 
 /** Message the visitor sends on WhatsApp (no backend integration yet). */
@@ -27,6 +28,7 @@ export default function ContactCta() {
     e.preventDefault()
     const link = whatsappUrl(buildMessage(name, company, email))
     setWhatsappLink(link)
+    trackEvent('contato_home_enviado_whatsapp')
     window.open(link, '_blank', 'noopener,noreferrer')
   }
 
@@ -48,7 +50,7 @@ export default function ContactCta() {
           </p>
         </div>
 
-        <form className="contact-cta__form" onSubmit={onSubmit}>
+        <form className="contact-cta__form" onSubmit={onSubmit} data-clarity-mask="true">
           <div className="contact-cta__row">
             <label>
               Nome

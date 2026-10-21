@@ -1,7 +1,7 @@
 /* —— SUPORTE ESPECIALIZADO —— */
 .support {
   padding: 96px 0;
-  background: #fff;
+  background: #eef3fb;
 
   &__container {
     display: grid;
@@ -71,9 +71,10 @@
 
   &__card {
     padding: 40px;
-    border: 1px solid #e3e8f0;
+    border: 1px solid #dde5f2;
     border-radius: 24px;
-    background: #f5f7fb;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(12, 44, 129, 0.06);
 
     h3 {
       font-size: 25px;

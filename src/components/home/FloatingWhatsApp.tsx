@@ -1,6 +1,7 @@
 'use client'
 
 import { whatsappUrl } from '@/lib/whatsapp'
+import { trackEvent } from '@/lib/clarity'
 
 const WHATSAPP_URL = whatsappUrl(
   'Olá, equipe Mega News. Gostaria de falar com um consultor sobre as soluções e sistemas da empresa.',
@@ -14,6 +15,7 @@ export default function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com a Mega News no WhatsApp"
+      onClick={() => trackEvent('whatsapp_flutuante')}
     >
       <span className="whatsapp-float__tooltip">Falar com a Mega News</span>
       <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">

@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import CookiePreferencesButton from '@/components/ui/CookiePreferencesButton'
 import './Footer.scss'
 
 const IG_URL = 'https://www.instagram.com/meganewsinfo/'
@@ -22,7 +24,13 @@ export default function Footer() {
             </svg>
           </a>
 
-          <span>© {new Date().getFullYear()} Mega News Informática | 04.638.280/0001-19</span>
+          <div className="footer__center">
+            <span>© {new Date().getFullYear()} Mega News Informática | 04.638.280/0001-19</span>
+            <nav className="footer__legal" aria-label="Privacidade">
+              <Link href="/politica-de-privacidade">Política de privacidade</Link>
+              <CookiePreferencesButton />
+            </nav>
+          </div>
 
           <address className="footer__address">
             R. Eliéser Dourado Moitinho, 499 - Irecê

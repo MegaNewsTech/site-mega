@@ -130,33 +130,63 @@
     margin-left: auto;
   }
 
+  /* Laranja (complementar ao azul da marca) com texto azul-marinho: contraste 5,5:1 */
   &__cta {
+    --cta-ring: rgba(255, 138, 31, 0.5);
+    --cta-ring-end: rgba(255, 138, 31, 0);
+    --cta-shine: rgba(255, 255, 255, 0.4);
+
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 40px;
     padding: 0 18px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid transparent;
     border-radius: 999px;
-    background: linear-gradient(180deg, #ea2a30 0%, #c8161d 100%);
-    box-shadow: 0 6px 16px rgba(208, 9, 18, 0.28);
-    color: #fff;
+    background-color: #ff8a1f;
+    /* brilho que atravessa o botão no hover */
+    background-image: linear-gradient(110deg, transparent 35%, var(--cta-shine) 50%, transparent 65%);
+    background-repeat: no-repeat;
+    background-size: 250% 100%;
+    background-position: 130% 0;
+    box-shadow: 0 6px 16px rgba(255, 138, 31, 0.3);
+    color: #0c2c81;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.01em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: filter 0.2s, transform 0.2s;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s, background-position 0.7s ease;
+
+    /* anel de pulsação suave, a cada 3s */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      animation: header-cta-pulse 3s ease-out infinite;
+    }
 
     &:hover {
-      filter: brightness(1.06);
+      background-color: #f57a05;
+      background-position: -30% 0;
       transform: translateY(-1px);
+
+      &::after {
+        animation: none;
+      }
     }
 
     &--block {
       width: 100%;
       height: 48px;
       margin-top: 8px;
+
+      &::after {
+        animation: none;
+      }
     }
   }
 
@@ -225,5 +255,26 @@
 @media (max-width: 640px) {
   .header__actions > .header__cta {
     display: none;
+  }
+}
+
+@keyframes header-cta-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--cta-ring);
+  }
+
+  60%,
+  100% {
+    box-shadow: 0 0 0 12px var(--cta-ring-end);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__cta {
+    transition: none;
+
+    &::after {
+      animation: none;
+    }
   }
 }

@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import { products } from '@/features/products/products'
 import { whatsappUrl } from '@/lib/whatsapp'
+import { trackEvent } from '@/lib/clarity'
 import './ContactSalesPage.scss'
 
 const BENEFITS = [
@@ -70,6 +72,7 @@ export default function ContactSalesPage() {
     e.preventDefault()
     const link = whatsappUrl(buildWhatsappMessage(form))
     setWhatsappLink(link)
+    trackEvent('orcamento_enviado_whatsapp')
     window.open(link, '_blank', 'noopener,noreferrer')
   }
 
@@ -139,7 +142,7 @@ export default function ContactSalesPage() {
                 </button>
               </div>
             ) : (
-              <form className="contact__form" onSubmit={onSubmit}>
+              <form className="contact__form" onSubmit={onSubmit} data-clarity-mask="true">
                 <h2>Contate nossa equipe de vendas</h2>
 
                 <div className="contact__row">
@@ -256,7 +259,7 @@ export default function ContactSalesPage() {
 
                 <p className="contact__legal">
                   Seus dados vão numa mensagem pronta no WhatsApp; nada é enviado sem você tocar em
-                  enviar. Ao enviar, aceito a <a href="#">política de privacidade</a> da Mega News e
+                  enviar. Ao enviar, aceito a <Link href="/politica-de-privacidade">política de privacidade</Link> da Mega News e
                   autorizo o contato por e-mail, telefone e WhatsApp.
                 </p>
               </form>

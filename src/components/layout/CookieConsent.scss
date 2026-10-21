@@ -1,0 +1,128 @@
+/* —— AVISO DE COOKIES (LGPD) —— */
+.cookie-consent {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 1100;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -8px 24px rgba(16, 24, 40, 0.08);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px 24px;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 16px clamp(16px, 3vw, 32px);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--text-primary);
+  }
+
+  &__body {
+    flex: 1;
+
+    p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+
+    a {
+      margin-left: 2px;
+      color: #0c2c81;
+      text-decoration: underline;
+    }
+  }
+
+  &__prefs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    margin-top: 12px;
+  }
+
+  &__pref {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 420px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+
+    input {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #0c2c81;
+    }
+
+    strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px;
+
+    /* Aceitar e Rejeitar com o mesmo peso visual, como pede a LGPD */
+    button {
+      min-width: 150px;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid #e3e5ea;
+      border-radius: 4px;
+      background: #eef0f3;
+      color: var(--text-primary);
+      font-size: 14.5px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+
+      &:hover {
+        background: #e2e5ea;
+        border-color: #d3d7de;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #0c2c81;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .cookie-consent {
+    &__inner {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    &__body {
+      flex-basis: calc(100% - 46px);
+    }
+
+    &__actions {
+      width: 100%;
+
+      button {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .cookie-consent__actions {
+    flex-direction: column;
+  }
+}

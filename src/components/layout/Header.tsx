@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import Logo from '@/components/layout/Logo'
+import { trackEvent } from '@/lib/clarity'
 import { productHref, products } from '@/features/products/products'
 import './Header.scss'
 
@@ -101,7 +102,11 @@ export default function Header() {
         </nav>
 
         <div className="header__actions">
-          <Link href="/fale-com-vendas" className="header__cta">
+          <Link
+            href="/fale-com-vendas"
+            className="header__cta"
+            onClick={() => trackEvent('cta_solicitar_orcamento')}
+          >
             Solicitar orçamento
           </Link>
           <button
@@ -140,7 +145,11 @@ export default function Header() {
               ))}
             </div>
             <Link href="/#suporte">Suporte</Link>
-            <Link href="/fale-com-vendas" className="header__cta header__cta--block">
+            <Link
+              href="/fale-com-vendas"
+              className="header__cta header__cta--block"
+              onClick={() => trackEvent('cta_solicitar_orcamento')}
+            >
               Solicitar orçamento
             </Link>
           </motion.div>
